@@ -1,0 +1,13 @@
+<cases>: uid .
+<comment>: string .
+<created.date>: datetime .
+<datatype.collection>: default .
+<datatype.result>: default .
+<datatype.scenario>: default .
+<datatype.session>: default .
+<modified.date>: datetime .
+<name>: string @index(trigram) .
+<scenario.result>: uid @reverse .
+<scenarios>: uid .
+<scenario.steps>: string @index(trigram) .
+<status>: string @index(exact) .

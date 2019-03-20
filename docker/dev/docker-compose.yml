@@ -21,6 +21,9 @@ services:
         target: /dgraph
         volume:
           nocopy: true
+      - type: bind
+        source: ./dump
+        target: /dump/
     ports:
       - 8080:8080
       - 9080:9080
@@ -37,6 +40,17 @@ services:
     ports:
       - 8000:8000
     command: dgraph-ratel
+  backup_restoration:
+    image: dgraph/dgraph:latest
+    command: dgraph live -r /dump/g01.rdf.gz -s /dump/g01.schema.gz -z zero:5080 -d server:9080
+    restart: on-failure
+    volumes:
+      - type: bind
+        source: ./dump
+        target: /dump/
+    depends_on:
+      - server
+      - zero
 
 volumes:
   dgraph:
