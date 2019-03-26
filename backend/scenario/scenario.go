@@ -16,14 +16,23 @@ type Scenario struct {
 
 var SearchByName = `query Name($name: string){
 	scenarios_by_regexp(func: has(datatype.scenario)) @filter(regexp(name,/.*$name.*/i)) {
+	uid
     expand(_all_)
 	}
 }`
 
 var GetByID = `query scenarios_by_id($id: string){
 	scenarios_by_id(func: uid($id)) @filter(has(datatype.scenario)) {
+	uid
     expand(_all_)
 	}
+}`
+
+var GetAllScenarios = `query all_scenarios($offset: int, $max_results: int){
+	all_scenarios(func: has(datatype.scenario), offset: $offset, first: $max_results) {
+	uid
+    expand(_all_)
+  }
 }`
 
 func CreateOrUpdateScenario(class Scenario) (*api.Mutation, error) {

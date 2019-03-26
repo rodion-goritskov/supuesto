@@ -47,6 +47,14 @@
   version = "v1.3.1"
 
 [[projects]]
+  digest = "1:dc7b5531ebe31404fe265490198be31c40b9150c3d2ac2d801d780cf052bd0b6"
+  name = "github.com/oceanicdev/chi-param"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "208526ddb441c1cc5a4555dd56f89a32d3c353a9"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
   name = "github.com/pkg/errors"
   packages = ["."]
@@ -158,6 +166,7 @@
     "github.com/go-chi/chi",
     "github.com/go-chi/chi/middleware",
     "github.com/go-chi/render",
+    "github.com/oceanicdev/chi-param",
     "google.golang.org/grpc",
   ]
   solver-name = "gps-cdcl"
