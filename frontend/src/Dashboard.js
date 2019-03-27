@@ -5,6 +5,7 @@ import ScenariosPage from './components/ScenariosPage';
 import Menu from './components/Menu';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import CreateScenarioPage from "./components/CreateScenarioPage";
+import ScenarioPage from "./components/ScenarioPage";
 
 const styles = ({
     root: {
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
                         <Menu />
                         <Route path="/" exact component={ScenariosPage} />
                         <Route path="/scenario/create" component={CreateScenarioPage} />
+                        <Route path="/scenario/edit/:id" component={ScenarioPage}/>
                     </div>
                 </Router>
         );

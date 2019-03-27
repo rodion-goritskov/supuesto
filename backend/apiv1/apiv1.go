@@ -18,8 +18,14 @@ func Routes() *chi.Mux{
 	router.Get("/scenario", SelectScenario)
 	router.Get("/scenario/{scenarioId}", FindScenarioById)
 	router.Delete("/scenario/{scenarioId}", DeleteScenarioById)
+	router.Options("/scenario", HeaderResponse)
 
 	return router
+}
+
+func HeaderResponse(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func SelectScenario(w http.ResponseWriter, r *http.Request) {

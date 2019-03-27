@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -94,7 +93,7 @@ const styles = theme => ({
     },
 });
 
-class CreateScenarioPage extends React.Component {
+class ScenarioPage extends React.Component {
     state = {
         name: 'Cat in the Hat',
         steps: '',
@@ -107,16 +106,11 @@ class CreateScenarioPage extends React.Component {
         });
     };
 
-    createScenario() {
-        axios.post("http://localhost:4444/v1/scenario", {
-            name: this.state.name,
-            "scenario.steps" : this.state.steps,
-        }).then(() => {
-                this.setState(() => ({
-                    toDashboard: true
-                }))
-            }
-        )
+    componentDidMount() {
+        axios.get(`http://localhost:4444/v1/scenario/` + this.props.match.params.id).then(res => {
+            const scenario = res.data;
+            this.setState({ name: scenario[0].name, steps: scenario[0]["scenario.steps"] })
+        })
     }
 
     render() {
@@ -125,37 +119,34 @@ class CreateScenarioPage extends React.Component {
         if (this.state.toDashboard === true) {
             return <Redirect to='/' />
         } else {
-                  return (
-            <main className={classes.content}>
-                <div>
-                    <form>
-                    <TextField
-                        id="outlined-name"
-                        label="Name"
-                        className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange('name')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                            id="outlined-multiline-flexible"
-                            label="Steps"
-                            multiline
-                            rowsMax="30"
-                            value={this.state.multiline}
-                            onChange={this.handleChange('steps')}
-                            className={classes.textField}
-                            margin="normal"
-                            variant="outlined"
-                    />
-                    </form>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={this.createScenario.bind(this)}>
-                        Create
-                    </Button>
-                </div></main>
-        );}
+            return (
+                <main className={classes.content}>
+                    <div>
+                        <form>
+                            <TextField
+                                id="outlined-name"
+                                label="Name"
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.handleChange('name')}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                            <TextField
+                                id="outlined-multiline-flexible"
+                                label="Steps"
+                                multiline
+                                rowsMax="30"
+                                value={this.state.steps}
+                                onChange={this.handleChange('steps')}
+                                className={classes.textField}
+                                margin="normal"
+                                variant="outlined"
+                            />
+                        </form>
+                    </div></main>
+            );}
     }
 }
 
-export default withStyles(styles)(CreateScenarioPage);
+export default withStyles(styles)(ScenarioPage);

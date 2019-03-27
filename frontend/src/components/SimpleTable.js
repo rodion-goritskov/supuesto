@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
+import {Link, Redirect} from "react-router-dom";
 
 const styles = {
     root: {
@@ -20,14 +21,14 @@ const styles = {
 
 class ScenarioTable extends React.Component {
     state = {
-        scenarios: []
+        scenarios: [],
     };
 
     componentDidMount() {
         axios.get(`http://localhost:4444/v1/scenario`, {
             params: {
                 offset: 0,
-                max: 2
+                max: 20
             }
         }).then(res => {
             const scenarios = res.data;
@@ -38,26 +39,26 @@ class ScenarioTable extends React.Component {
     render() {
         return (
             <Paper>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Scenario ID</TableCell>
-                        <TableCell>Scenario name</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    { this.state.scenarios.map(scenario =>
-                        <TableRow key={scenario.uid}>
-                            <TableCell component="th" scope="row">
-                                {scenario.uid}
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                {scenario.name}
-                            </TableCell>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Scenario ID</TableCell>
+                            <TableCell>Scenario name</TableCell>
                         </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.scenarios.map(scenario =>
+                            <TableRow key={scenario.uid} hover="true" component={Link} to={"/scenario/edit/" + scenario.uid}>
+                                <TableCell component="th" scope="row">
+                                    {scenario.uid}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {scenario.name}
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </Paper>
         );
     }
